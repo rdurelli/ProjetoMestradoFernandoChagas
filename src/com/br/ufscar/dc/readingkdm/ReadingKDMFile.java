@@ -1,6 +1,7 @@
 package com.br.ufscar.dc.readingkdm;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
@@ -11,7 +12,9 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.gmt.modisco.omg.kdm.code.AbstractCodeElement;
 import org.eclipse.gmt.modisco.omg.kdm.code.ClassUnit;
+import org.eclipse.gmt.modisco.omg.kdm.code.CodeItem;
 import org.eclipse.gmt.modisco.omg.kdm.code.CodeModel;
+import org.eclipse.gmt.modisco.omg.kdm.code.MethodUnit;
 import org.eclipse.gmt.modisco.omg.kdm.code.Package;
 import org.eclipse.gmt.modisco.omg.kdm.kdm.KdmPackage;
 import org.eclipse.gmt.modisco.omg.kdm.kdm.Segment;
@@ -88,7 +91,25 @@ public class ReadingKDMFile {
 
 	}
 	
-	private void getMethods() {
+	private List<MethodUnit> getMethods(ClassUnit classUnit) {
+		
+		EList<CodeItem> allElementsOfTheClass = classUnit.getCodeElement();
+		
+		List<MethodUnit> methodUnit = new ArrayList<MethodUnit>();
+		
+		for (CodeItem codeItem : allElementsOfTheClass) {
+			
+			if (codeItem instanceof MethodUnit) {
+				
+				MethodUnit methodUnitToPutIntoTheList = (MethodUnit) codeItem;
+				
+				methodUnit.add(methodUnitToPutIntoTheList);
+				
+			}
+			
+		}
+		
+		return methodUnit;
 		
 	}
 
