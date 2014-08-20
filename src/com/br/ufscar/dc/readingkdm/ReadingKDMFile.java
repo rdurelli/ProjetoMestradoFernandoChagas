@@ -14,6 +14,7 @@ import org.eclipse.gmt.modisco.omg.kdm.code.AbstractCodeElement;
 import org.eclipse.gmt.modisco.omg.kdm.code.ClassUnit;
 import org.eclipse.gmt.modisco.omg.kdm.code.CodeItem;
 import org.eclipse.gmt.modisco.omg.kdm.code.CodeModel;
+import org.eclipse.gmt.modisco.omg.kdm.code.InterfaceUnit;
 import org.eclipse.gmt.modisco.omg.kdm.code.MethodUnit;
 import org.eclipse.gmt.modisco.omg.kdm.code.Package;
 import org.eclipse.gmt.modisco.omg.kdm.kdm.KdmPackage;
@@ -91,7 +92,7 @@ public class ReadingKDMFile {
 
 	}
 	
-	private List<MethodUnit> getMethods(ClassUnit classUnit) {
+	public List<MethodUnit> getMethods(ClassUnit classUnit) {
 		
 		EList<CodeItem> allElementsOfTheClass = classUnit.getCodeElement();
 		
@@ -112,5 +113,27 @@ public class ReadingKDMFile {
 		return methodUnit;
 		
 	}
+	
+	public List<MethodUnit> getMethods(InterfaceUnit interfaceUnit) {
+		
+		EList<CodeItem> allElementsOfTheClass = interfaceUnit.getCodeElement();
+		
+		List<MethodUnit> methodUnit = new ArrayList<MethodUnit>();
+		
+		for (CodeItem codeItem : allElementsOfTheClass) {
+			
+			if (codeItem instanceof MethodUnit) {
+				
+				MethodUnit methodUnitToPutIntoTheList = (MethodUnit) codeItem;
+				
+				methodUnit.add(methodUnitToPutIntoTheList);
+				
+			}
+			
+		}
+		
+		return methodUnit;
+		
+	}	
 
 }
