@@ -17,7 +17,6 @@ public class Activator extends AbstractUIPlugin {
 	
 	
 	
-	
 	/**
 	 * The constructor
 	 */
