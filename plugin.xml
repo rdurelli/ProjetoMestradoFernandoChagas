@@ -26,5 +26,28 @@
          </action>
       </actionSet>
    </extension>
+   
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            objectClass="org.eclipse.core.resources.IFile"
+            id="ProjetoMestradoFernandoChagas.contribution1">
+         <menu
+               label="Get Architecture"
+               path="additions"
+               id="ProjetoMestradoFernandoChagas.menu1">
+            <separator
+                  name="group1">
+            </separator>
+         </menu>
+         <action
+               label="Architecture Compliance Checking"
+               class="com.br.actions.GettingArchitecture"
+               menubarPath="ProjetoMestradoFernandoChagas.menu1/group1"
+               enablesFor="1"
+               id="projetomestradofernandochagas.actions.newAction">
+         </action>
+      </objectContribution>
+   </extension>
 
 </plugin>
