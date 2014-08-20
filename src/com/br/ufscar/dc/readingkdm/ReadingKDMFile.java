@@ -87,5 +87,9 @@ public class ReadingKDMFile {
 		}
 
 	}
+	
+	private void getMethods() {
+		
+	}
 
 }
