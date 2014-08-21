@@ -10,7 +10,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.gmt.modisco.omg.kdm.action.AbstractActionRelationship;
+import org.eclipse.gmt.modisco.omg.kdm.action.ActionElement;
+import org.eclipse.gmt.modisco.omg.kdm.action.ActionRelationship;
 import org.eclipse.gmt.modisco.omg.kdm.code.AbstractCodeElement;
+import org.eclipse.gmt.modisco.omg.kdm.code.CallableUnit;
 import org.eclipse.gmt.modisco.omg.kdm.code.ClassUnit;
 import org.eclipse.gmt.modisco.omg.kdm.code.CodeItem;
 import org.eclipse.gmt.modisco.omg.kdm.code.CodeModel;
@@ -20,7 +24,7 @@ import org.eclipse.gmt.modisco.omg.kdm.code.Package;
 import org.eclipse.gmt.modisco.omg.kdm.kdm.KdmPackage;
 import org.eclipse.gmt.modisco.omg.kdm.kdm.Segment;
 
-public class ReadingKDMFile {
+public class ReadingKDMFile {	
 
 	public Segment load(String KDMModelFullPath) {
 
@@ -91,49 +95,114 @@ public class ReadingKDMFile {
 		}
 
 	}
-	
+
 	public List<MethodUnit> getMethods(ClassUnit classUnit) {
-		
+
 		EList<CodeItem> allElementsOfTheClass = classUnit.getCodeElement();
-		
+
 		List<MethodUnit> methodUnit = new ArrayList<MethodUnit>();
-		
+
 		for (CodeItem codeItem : allElementsOfTheClass) {
-			
+
 			if (codeItem instanceof MethodUnit) {
-				
+
 				MethodUnit methodUnitToPutIntoTheList = (MethodUnit) codeItem;
-				
+
 				methodUnit.add(methodUnitToPutIntoTheList);
-				
+
 			}
-			
+
 		}
-		
+
 		return methodUnit;
-		
+
 	}
 	
-	public List<MethodUnit> getMethods(InterfaceUnit interfaceUnit) {
-		
-		EList<CodeItem> allElementsOfTheClass = interfaceUnit.getCodeElement();
-		
-		List<MethodUnit> methodUnit = new ArrayList<MethodUnit>();
-		
-		for (CodeItem codeItem : allElementsOfTheClass) {
-			
-			if (codeItem instanceof MethodUnit) {
-				
-				MethodUnit methodUnitToPutIntoTheList = (MethodUnit) codeItem;
-				
-				methodUnit.add(methodUnitToPutIntoTheList);
-				
+	public List<ActionElement> getActionsElements(MethodUnit methodUnit) {
+
+		EList<AbstractCodeElement> allElementsOfTheMethod = methodUnit.getCodeElement();			
+
+		List<ActionElement> actionElements = new ArrayList<ActionElement>();
+
+		for (AbstractCodeElement codeItem : allElementsOfTheMethod) {
+
+			if (codeItem instanceof ActionElement && ((ActionElement) codeItem).getKind().endsWith("method invocation")) {
+
+				ActionElement actionElementToPutIntoTheList = (ActionElement) codeItem;
+
+				actionElements.add(actionElementToPutIntoTheList);
+
 			}
-			
+
 		}
-		
+
+		return actionElements;
+
+	}
+	
+	public List<ActionRelationship> getRelationships(ActionElement actionElement) {
+
+		EList<AbstractActionRelationship> allElementsOfTheMethod = actionElement.getActionRelation();			
+
+		List<ActionRelationship> actionRelationships = new ArrayList<ActionRelationship>();
+
+		for (AbstractActionRelationship codeItem : allElementsOfTheMethod) {
+
+			if (codeItem instanceof ActionRelationship) {
+
+				ActionRelationship actionRelationshipToPutIntoTheList = (ActionRelationship) codeItem;
+
+				actionRelationships.add(actionRelationshipToPutIntoTheList);
+
+			}
+
+		}
+
+		return actionRelationships;
+
+	}
+
+	public List<MethodUnit> getMethods(InterfaceUnit interfaceUnit) {
+
+		EList<CodeItem> allElementsOfTheClass = interfaceUnit.getCodeElement();
+
+		List<MethodUnit> methodUnit = new ArrayList<MethodUnit>();
+
+		for (CodeItem codeItem : allElementsOfTheClass) {
+
+			if (codeItem instanceof MethodUnit) {
+
+				MethodUnit methodUnitToPutIntoTheList = (MethodUnit) codeItem;
+
+				methodUnit.add(methodUnitToPutIntoTheList);
+
+			}
+
+		}
+
 		return methodUnit;
-		
-	}	
+
+	}
+
+	public List<CallableUnit> getCallableUnits(ClassUnit classUnit) {
+
+		EList<CodeItem> allElementsOfTheClass = classUnit.getCodeElement();
+
+		List<CallableUnit> callableUnits = new ArrayList<CallableUnit>();
+
+		for (CodeItem codeItem : allElementsOfTheClass) {
+
+			if (codeItem instanceof CallableUnit) {
+
+				CallableUnit callableUnitToPutIntoTheList = (CallableUnit) codeItem;
+
+				callableUnits.add(callableUnitToPutIntoTheList);
+
+			}
+
+		}
+
+		return callableUnits;
+	}
 
 }
